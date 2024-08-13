@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Manrope as Inter } from "next/font/google";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import "./globals.css";
+
 import Header from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,11 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
-      <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="">
+        <body className={inter.className}>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <Header />
+            <UserButton />
+            <main>{children}</main>
+          </SignedIn>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
