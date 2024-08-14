@@ -1,75 +1,110 @@
 "use client";
-
+import {
+  doc,
+  collection,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  writeBatch,
+  addDoc,
+} from "firebase/firestore";
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
-import { doc, collection, getDoc, writeBatch } from "firebase/firestore";
+import { useSession } from "next-auth/react";
+import { generateFlashcards } from "../actions";
 import { db } from "../firebase";
 
+interface Flashcard {
+  front: string;
+  back: string;
+}
+
+interface User {
+  id: string;
+  flashcardSets: { name: string; id: string; email: string }[];
+  name?: string;
+  email?: string;
+  image?: string;
+}
+
 export default function Generate() {
-  const [text, setText] = useState<string>("");
-  const [flashcards, setFlashcards] = useState<any[]>([]);
+  const [prompt, setPrompt] = useState<string>("");
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [setName, setSetName] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { user } = useUser();
+  const { data: session } = useSession();
+  const user = session?.user?.email;
+  console.log("User:", user);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const saveFlashcards = async () => {
-    if (!setName.trim()) {
-      alert("Please enter a name for your flashcard set.");
+  const saveFlashcards = async (
+    user: { email: string },
+    setName: string | undefined,
+    flashcards: any[]
+  ) => {
+    if (!user || !user.email || !setName) {
+      console.error("Missing user or setName");
       return;
     }
-
     try {
-      const userDocRef = doc(collection(db, "users"), user?.id);
-      const userDocSnap = await getDoc(userDocRef);
-
       const batch = writeBatch(db);
 
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();
-        const updatedSets = [
-          ...(userData.flashcardSets || []),
-          { name: setName },
-        ];
-        batch.update(userDocRef, { flashcardSets: updatedSets });
-      } else {
-        batch.set(userDocRef, { flashcardSets: [{ name: setName }] });
-      }
+      const userDocRef = doc(collection(db, "users"), user.email);
+      const flashcardSetsCollectionRef = collection(
+        userDocRef,
+        "flashcardSets"
+      );
 
-      const setDocRef = doc(collection(userDocRef, "flashcardSets"), setName);
-      handleCloseModal();
-      setSetName("");
-    } catch (error) {
-      console.error("Error saving flashcards:", error);
-      alert("An error occurred while saving flashcards. Please try again.");
-    }
-  };
-
-  const handleSubmit = async () => {
-    // Call API Here
-    if (!text.trim()) {
-      alert("Please enter some text to generate flashcards.");
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        body: text,
+      const setDocRef = await addDoc(flashcardSetsCollectionRef, {
+        name: setName,
+        flashcards: flashcards,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to generate flashcards");
-      }
+      batch.set(userDocRef, {
+        flashcardSets: arrayUnion({
+          name: setName,
+          id: setDocRef.id,
+        }),
+      });
 
-      const data = await response.json();
-      setFlashcards(data);
+      await batch.commit();
+      setMessage(`${setName} has been saved to your account.`);
+    } catch (error) {
+      console.error("Error saving flashcards:", error);
+      // Handle error, e.g., display an error message to the user
+    }
+    setIsModalOpen(false);
+  };
+
+  async function handleSubmit() {
+    setIsLoading(true);
+    try {
+      const response = await generateFlashcards(prompt);
+      const flashcardsData = response.flashcards;
+      setFlashcards(flashcardsData);
+      // setPrompt("");
     } catch (error) {
       console.error("Error generating flashcards:", error);
-      alert("An error occurred while generating flashcards. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleSave = async () => {
+    try {
+      if (user) {
+        const userObject = { email: user };
+        await saveFlashcards(userObject, setName, flashcards);
+        setIsModalOpen(false);
+      } else {
+        console.log("No user found");
+      }
+    } catch (error) {
+      console.error("Error saving flashcards:", error);
     }
   };
 
@@ -78,8 +113,8 @@ export default function Generate() {
       <div className="my-4">
         <h4 className="pb-2 border-b">Generate Flashcards</h4>
         <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
           className="w-full h-64 p-4 mb-2 border rounded-xl"
           placeholder="Enter text to generate flashcards"
           rows={4}
@@ -95,17 +130,25 @@ export default function Generate() {
 
       {/* Flashcards Display Here */}
       {flashcards.length > 0 && (
-        <div className="mt-4">
-          <h2 className="pb-2 border">Generated Flashcards</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {flashcards.map((flashcard, index) => (
-              <div key={index} className="bg-white p-4 rounded-xl">
-                <h3 className="font-bold">Front</h3>
-                <p>{flashcard.front}</p>
-                <h3 className="font-bold">Back</h3>
-                <p>{flashcard.back}</p>
-              </div>
-            ))}
+        <div>
+          <h2>Generated Flashcards</h2>
+          <div>
+            {flashcards.map((flashcard, index) => {
+              console.log("Flashcard Front:", flashcard.front);
+              return (
+                <div
+                  key={index}
+                  className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2"
+                >
+                  <div className="max-w-[12rem] h-auth p-4 rounded-xl border flex flex-col space-y-3">
+                    <h4>{flashcard.front}</h4>
+                  </div>
+                  <div className="max-w-[12rem] h-auth p-4 rounded-xl border flex flex-col space-y-3">
+                    <h6>{flashcard.back}</h6>
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <button onClick={handleOpenModal}>Save Flashcards</button>
         </div>
@@ -124,7 +167,7 @@ export default function Generate() {
           </div>
           <div>
             <button onClick={handleCloseModal}>Cancel</button>
-            <button onClick={saveFlashcards}>Save</button>
+            <button onClick={(e) => user && handleSave()}>Save</button>
           </div>
         </section>
       )}

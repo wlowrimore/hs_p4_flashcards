@@ -16,21 +16,30 @@ You should return in the following JSON format:
 `
 
 export async function POST(req) {
-  const openai = new OpenAI()
+  const openai = new OpenAI(process.env.OPENAI_API_KEY)
   const data = await req.text()
 
+  if (!data.trim()) {
+    return NextResponse.json({ error: 'Please enter some text to generate flashcards.' }, { status: 400 })
+  }
+
   // Open API Call Here!!!
-  const completion = await openai.chat.completions.create({
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'usere', content: data },
-    ],
-    model: 'gpt-4o',
-    response_format: { type: 'json_object' },
-  })
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'usere', content: data },
+      ],
+      model: 'gpt-4o',
+      response_format: { type: 'json_object' },
+    })
+    // Process API Response Here!!!
+    const flashcards = JSON.parse(completion.choices[0].message.content)
 
-  // Process API Response Here!!!
-  const flashcards = JSON.parse(completion.choices[0].message.content)
+    return NextResponse.json(flashcards.flashcards)
+  } catch (error) {
+    console.error("Error generating flashcards:", error);
+    return NextResponse.json({ error: 'An error occurred while generating flashcards. Please try again.' }, { status: 500 })
+  }
 
-  return NextResponse.json(flashcards.flashcards)
 }
