@@ -109,7 +109,7 @@ export default function Generate() {
   };
 
   return (
-    <main className="max-w-7xl">
+    <main className="w-screen max-w-[80rem] mx-auto">
       <div className="my-4">
         <h4 className="pb-2 border-b">Generate Flashcards</h4>
         <textarea
