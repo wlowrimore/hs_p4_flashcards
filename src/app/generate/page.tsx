@@ -121,7 +121,7 @@ export default function Generate() {
   };
 
   return (
-    <main className="w-screen max-w-[80rem] mx-auto">
+    <main className="w-screen max-w-[80rem] min-h-screen mx-auto">
       <div className="py-6 px-6 rounded border-2 border-blue-300 flex items-center bg-yellow-50/30">
         <div className="flex flex-col w-1/2">
           <h2 className="pb-12 text-2xl font-semibold uppercase">
@@ -165,10 +165,10 @@ export default function Generate() {
                     >
                       <div
                         onClick={() => handleFlipClick(index)}
-                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] p-4 rounded-xl border-2 border-neutral-400 flex flex-col space-y-3 justify-center relative bg-blue-200 cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
                       >
-                        <div>
-                          <div className="w-full absolute top-2 flex">
+                        <div className="bg-blue-200 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant.webp')] bg-no-repeat bg-center">
+                          <div className="w-full absolute top-3 flex">
                             <p className="text-xs">{prompt}</p>
                             <p className="text-xs font-light absolute right-8">
                               question
@@ -179,10 +179,10 @@ export default function Generate() {
                       </div>
                       <div
                         onClick={() => handleFlipClick(index)}
-                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] p-4 rounded-xl border-2 border-blue-200 flex flex-col text-center space-y-3 justify-center relative bg-yellow-100 cursor-pointer transition duration-200 hover:brightness-110 shadow-md shadow-zinc-300"
+                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
                       >
-                        <div>
-                          <div className="w-full absolute top-2 flex">
+                        <div className="bg-yellow-100 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant2.webp')] bg-no-repeat bg-center">
+                          <div className="w-full absolute top-3 flex">
                             <p className="text-xs">{prompt}</p>
                             <p className="text-xs font-light absolute right-8">
                               answer
