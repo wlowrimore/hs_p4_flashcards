@@ -8,7 +8,7 @@ const chatModel = new ChatOpenAI({
 
 export async function generateFlashcards(prompt: string) {
   try {
-    prompt = `You are a flashcard creator. Generate 10 flashcards for a ${prompt} subject.  Each flashcard should have a front and back with the front containing the question and the back containing the answer.  Both front and back should be one sentence long.  The output should be in the following JSON format:
+    prompt = `You are a flashcard creator. Generate 12 flashcards for a ${prompt} subject.  Each flashcard should have a front and back with the front containing the question and the back containing the answer.  Both front and back should be one sentence long.  The output should be in the following JSON format:
      {
       "flashcards": {
         "front": "Front of the card",

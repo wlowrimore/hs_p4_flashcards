@@ -22,7 +22,9 @@ export default function RootLayout({
       <html lang="en" className="">
         <body className={inter.className}>
           <Header />
-          <main>{children}</main>
+          <main className="bg-gradient-to-tr from-amber-400 to-blue-700/50">
+            {children}
+          </main>
         </body>
       </html>
     </SessionWrapper>
