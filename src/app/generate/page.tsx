@@ -110,37 +110,41 @@ export default function Generate() {
 
   return (
     <main className="w-screen max-w-[80rem] mx-auto">
-      <div className="my-4">
-        <h4 className="pb-2 border-b">Generate Flashcards</h4>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          className="w-full h-64 p-4 mb-2 border rounded-xl"
-          placeholder="Enter text to generate flashcards"
-          rows={4}
-        />
+      <div className="my-6 py-12 px-6 rounded border-2 border-blue-300 flex items-center bg-yellow-50">
+        <div className="flex flex-col w-1/2">
+          <h4 className="pb-4 text-2xl font-semibold uppercase">
+            Specify Cards Subject Below
+          </h4>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            className="w-full h-24 p-4 mb-2 border border-neutral-700 rounded-lg placeholder:text-center placeholder:uppercase placeholder:text-neutral-800/60 placeholder:pt-5"
+            rows={5}
+            placeholder="Enter&nbsp;  Flashcards&nbsp;  Subject"
+          />
 
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-blue-500 rounded-xl py-2 px-4"
-        >
-          Generate
-        </button>
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-blue-400 text-neutral-950 uppercase text-lg font-semibold tracking-wider rounded-lg border border-neutral-700 py-2 px-4 hover:bg-blue-500 hover:text-yellow-400 transition duration-200"
+          >
+            Generate
+          </button>
+        </div>
+        <div className="flex-1">
+          <h1 className="text-center">FlashCard Decks Displayed Here</h1>
+        </div>
       </div>
 
       {/* Flashcards Display Here */}
       {flashcards.length > 0 && (
-        <div>
+        <div className="w-full rounded ">
           <h2>Generated Flashcards</h2>
           <div>
             {flashcards.map((flashcard, index) => {
               console.log("Flashcard Front:", flashcard.front);
               return (
-                <div
-                  key={index}
-                  className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2"
-                >
-                  <div className="max-w-[12rem] h-auth p-4 rounded-xl border flex flex-col space-y-3">
+                <div key={index} className="grid grid-cols-2 gap-2">
+                  <div className="max-w-[12rem] min-h-[15rem] p-4 rounded-xl border flex flex-col space-y-3">
                     <h4>{flashcard.front}</h4>
                   </div>
                   <div className="max-w-[12rem] h-auth p-4 rounded-xl border flex flex-col space-y-3">
