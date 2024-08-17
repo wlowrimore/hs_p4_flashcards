@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { generateFlashcards } from "../actions";
 import { db } from "../firebase";
 import Image from "next/image";
@@ -173,6 +173,10 @@ export default function GeneratePage() {
   const handleFlashcardSetClick = (selectedSet: FlashcardSet) => {
     router.push(`/set/${selectedSet.id}`);
   };
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <main className="w-screen max-w-[80rem] min-h-screen mx-auto flex flex-col justify-center">

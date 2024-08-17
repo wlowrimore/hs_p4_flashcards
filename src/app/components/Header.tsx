@@ -27,18 +27,22 @@ const Header = () => {
           <h1 className="text-2xl font-bold uppercase">Memoize</h1>
         </Link>
         <nav className="hidden md:flex space-x-4 items-center">
-          <Link
-            href="/generate"
-            className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
-          >
-            Create Cards
-          </Link>
-          <Link
-            href="/generate"
-            className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
-          >
-            Saved Cards
-          </Link>
+          {session && (
+            <>
+              <Link
+                href="/generate"
+                className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
+              >
+                Create Cards
+              </Link>
+              <Link
+                href="/generate"
+                className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
+              >
+                Saved Cards
+              </Link>
+            </>
+          )}
           {!session ? (
             <button
               onClick={() => signIn("google", { callbackUrl: "/generate" })}
