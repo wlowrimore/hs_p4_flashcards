@@ -175,16 +175,16 @@ export default function GeneratePage() {
   };
 
   return (
-    <main className="w-screen max-w-[80rem] min-h-screen mx-auto">
-      <div className="py-6 px-6 rounded flex items-center bg-yellow-50/30 gap-2">
-        <div className="flex flex-col w-1/2 border-r-2 border-red-500 pr-6">
-          <h2 className="pb-12 text-2xl font-semibold uppercase">
+    <main className="w-screen max-w-[80rem] min-h-screen mx-auto flex flex-col justify-center">
+      <div className="py-6 px-6 rounded flex bg-yellow-50/30 gap-2 border-t-2 border-r-2 border-l-2 border-neutral-400">
+        <div className="flex flex-col w-1/2 border-r-2 border-neutral-400 pr-6">
+          <h2 className="pb-2 px-4 text-2xl font-semibold uppercase">
             Add Your Card Subject Below
           </h2>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="w-full h-24 px-4 pt-9 mb-2 uppercase text-lg font-semibold text-center border border-neutral-700 rounded-lg placeholder:text-center placeholder:uppercase placeholder:text-neutral-800/40"
+            className="w-full h-24 px-4 pt-9 mb-2 bg-white/60 uppercase text-lg font-semibold text-center rounded-lg placeholder:text-center placeholder:uppercase placeholder:text-neutral-800/40 outline-none"
             rows={5}
             placeholder="Enter&nbsp;  Flashcards&nbsp;  Subject"
           />
@@ -203,15 +203,15 @@ export default function GeneratePage() {
             <h2 className="pb-2 px-4 text-2xl font-semibold uppercase">
               Saved Sets
             </h2>
-            <div className="flex-1 grid grid-cols-4 px-4">
+            <div className="flex-1 grid grid-cols-4 px-4 gap-2">
               {flashcardSets.map((flashcardSet, fcIndex) => (
                 <div
                   key={fcIndex}
                   onClick={() => handleFlashcardSetClick(flashcardSet)}
                   className="text-center"
                 >
-                  <div className="bg-[url('/images/elephant.webp')] bg-no-repeat bg-cover p-2 w-[80%] flex justify-center items-center bg-white/60 rounded-lg">
-                    <h2 className="text-sm">
+                  <div className="bg-[url('/images/elephant.webp')] bg-no-repeat bg-cover bg-center p-2 w-full flex justify-center items-center bg-white/60 rounded-lg cursor-pointer hover:brightness-110 transition duration-200">
+                    <h2 className="text-xs min-w-[12rem] max-w-[12rem] min-h-[8rem] flex items-center justify-center  p-0 font-bold tracking-wider">
                       {flashcardSet.name.toUpperCase()}
                     </h2>
                   </div>
@@ -225,13 +225,13 @@ export default function GeneratePage() {
       </div>
 
       {/* Generated Flashcards Display Here */}
-      <div className="py-6 px-6 rounded border-2 border-blue-300 flex items-center bg-yellow-50/30">
+      <div className="py-6 px-4 rounded flex bg-yellow-50/30 border-l-2 border-r-2 border-b-2 border-neutral-400 shadow shadow-neutral-500">
         {flashcards.length > 0 && (
-          <div className="max-w-[80rem] flex flex-col mx-auto justify-center rounded">
-            <h2 className="pb-12 text-2xl font-semibold uppercase">
-              Generated Flashcards Preview
+          <div className="bg-gradient-to-bl from-zinc-100 via-gray-400 to-blue-500 border border-neutral-200 z-20 flex flex-col mx-auto justify-center items-center rounded-lg px-6">
+            <h2 className="pb-8 text-2xl font-bold tracking-wide uppercase">
+              Generated Flashcards Preview for {prompt}
             </h2>
-            <div className="grid grid-cols-4 gap-10 w-full border-b pb-6 border-neutral-700">
+            <div className="grid grid-cols-4 gap-10 h-1/2 border-b pb-6 border-neutral-700">
               {flashcards.map((flashcard, index) => {
                 const isFlipped = cardStates[index] ?? false;
                 return (
@@ -242,7 +242,7 @@ export default function GeneratePage() {
                     >
                       <div
                         onClick={() => handleFlipClick(index)}
-                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                        className="min-w-[15rem] max-w-[15rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-500"
                       >
                         <div className="bg-blue-200 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant.webp')] bg-no-repeat bg-center">
                           <div className="w-full absolute top-3 flex">
@@ -279,7 +279,7 @@ export default function GeneratePage() {
             </div>
             <button
               onClick={handleOpenModal}
-              className="bg-neutral-800 text-white text-xl text-center my-3 uppercase py-2 px-4 rounded-3xl tracking-wide border border-white hover:opacity-90 transition duration-200"
+              className="bg-zinc-300 text-neutral-950 text-xl font-semibold tracking-wider text-center my-3 uppercase py-2 px-4 rounded-lg border border-zinc-100 hover:bg-zinc-100 transition duration-200"
             >
               Save This Deck
             </button>

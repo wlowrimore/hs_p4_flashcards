@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
+import ReactCardFlip from "react-card-flip";
 
 interface FlashcardSet {
   id: string;
@@ -17,6 +18,8 @@ interface FlashcardSet {
 
 const FlashcardSetDetails = () => {
   const [flashcardSet, setFlashcardSet] = useState<FlashcardSet | null>(null);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
+  const [cardStates, setCardStates] = useState<{ [key: number]: boolean }>({});
 
   const { data: session } = useSession();
   const userEmail: { email: string } | undefined = session?.user
@@ -57,80 +60,68 @@ const FlashcardSetDetails = () => {
     }
   }, []);
 
+  const handleFlipClick = (index: number) => {
+    setCardStates((prevCardStates) => ({
+      ...prevCardStates,
+      [index]: !prevCardStates[index],
+    }));
+  };
+
   return (
-    <div>
-      <h1>Details Page</h1>
-      {flashcardSet && (
-        <div>
-          <h2>{flashcardSet?.name.toUpperCase()}</h2>
-          {flashcardSet?.flashcards.map((flashcard, index) => (
-            <div key={index}>
-              <p>{flashcard.front}</p>
-              <p>{flashcard.back}</p>
-            </div>
-          ))}
-        </div>
-      )}
-      <p>{id}</p>
-    </div>
+    <main className="w-screen max-w-[80rem] min-h-screen flex py-12 mx-auto">
+      <div className="flex flex-col w-full">
+        <h2 className="pb-6 text-4xl font-semibold uppercase">
+          Let&apos;s study some&nbsp;{flashcardSet?.name.toUpperCase()}
+          <p className="text-xl"></p>
+        </h2>
+        {flashcardSet && (
+          <div className="grid grid-cols-4 gap-4">
+            {flashcardSet?.flashcards.map((flashcard, index) => {
+              const isFlipped = cardStates[index] ?? false;
+              return (
+                <div key={index} className="w-full">
+                  <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                    <div
+                      onClick={() => handleFlipClick(index)}
+                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                    >
+                      <div className="bg-blue-200 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant.webp')] bg-no-repeat bg-center">
+                        <div className="w-full absolute top-3 flex">
+                          <p className="text-xs">{flashcardSet.name}</p>
+                          <p className="text-xs font-light absolute right-8">
+                            question
+                          </p>
+                        </div>
+                        <h4 className="text-lg text-center">
+                          {flashcard.front}
+                        </h4>
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => handleFlipClick(index)}
+                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                    >
+                      <div className="bg-yellow-100 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant2.webp')] bg-no-repeat bg-center">
+                        <div className="w-full absolute top-3 flex">
+                          <p className="text-xs">{flashcardSet.name}</p>
+                          <p className="text-xs font-light absolute right-8">
+                            answer
+                          </p>
+                        </div>
+                        <h6 className="text-lg text-center">
+                          {flashcard.back}
+                        </h6>
+                      </div>
+                    </div>
+                  </ReactCardFlip>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </main>
   );
 };
 
 export default FlashcardSetDetails;
-
-// const FlashcardSetDetails = () => {
-//   const { id } = useParams();
-//   const { data: session } = useSession();
-
-//   const [flashcardSet, setFlashcardSet] = useState<FlashcardSet | null>(null);
-//   const [error, setError] = useState<any>();
-
-//   useEffect(() => {
-//     const fetchFlashcardSet = async () => {
-//       const userEmail = session?.user?.email;
-
-//       if (userEmail && id) {
-//         try {
-//           const usersCollection = collection(db, "users");
-//           const userDoc = doc(usersCollection, userEmail);
-//           const flashcardSetsCollection = collection(
-//             userDoc,
-//             "flashcardSets"
-//           ).withConverter(flashcardSetConverter);
-//           const docRef = doc(flashcardSetsCollection, id);
-
-//           console.log("User email:", userEmail);
-//           console.log("Flashcard set ID:", id);
-//           console.log("Flashcard set docRef:", docRef);
-
-//           const docSnap = await getDoc(docRef);
-
-//           if (docSnap.exists()) {
-//             setFlashcardSet(docSnap.data() as FlashcardSet);
-//           } else {
-//             console.log("No such document!");
-//           }
-//         } catch (error) {
-//           setError(error);
-//           console.error("Error fetching flashcard set:", error);
-//         }
-//       }
-//     };
-
-//     fetchFlashcardSet();
-//   }, [id, session]);
-
-//   return (
-//     <div>
-//       <h1>Details Page</h1>
-//       {flashcardSet && (
-//         <div>
-//           <h2>{flashcardSet?.title}</h2>
-//           <p>{flashcardSet?.id}</p>
-//         </div>
-//       )}
-//       {error && <p>Error: {error.message}</p>}
-//       <p>{id}</p>
-//     </div>
-//   );
-// };
