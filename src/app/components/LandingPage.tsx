@@ -32,10 +32,8 @@ function LandingPage() {
     <div className="px-8 py-12 min-h-screen">
       {/* Hero section */}
       <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-4xl font-bold mb-4">
-          Learn Faster, Remember Longer
-        </h2>
-        <p className="text-lg mb-8">
+        <h2 className="text-6xl mb-4">Learn Faster, Remember Longer</h2>
+        <p className="text-2xl mb-8">
           Master any subject with our powerful flashcard app.
         </p>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -45,7 +43,7 @@ function LandingPage() {
 
       {/* Pricing section */}
       <section className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">Pricing</h2>
+        {/* <h2 className="text-3xl font-bold text-center mb-8">Pricing</h2> */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pricingTiers.map((tier) => (
             <div

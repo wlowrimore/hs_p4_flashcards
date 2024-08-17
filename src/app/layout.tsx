@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Manrope as Inter } from "next/font/google";
+import { Poppins as Inter } from "next/font/google";
 import "./globals.css";
 
 import Header from "./components/Header";
 import SessionWrapper from "@/providers/SessionProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

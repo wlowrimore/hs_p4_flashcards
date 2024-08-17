@@ -70,10 +70,10 @@ const FlashcardSetDetails = () => {
   return (
     <main className="w-screen max-w-[80rem] min-h-screen flex py-12 mx-auto">
       <div className="flex flex-col w-full">
-        <h2 className="pb-6 text-4xl font-semibold uppercase">
+        <h2 className="pb-6 text-4xl text-neutral-700 font-semibold uppercase">
           Let&apos;s study some&nbsp;{flashcardSet?.name.toUpperCase()}
-          <p className="text-xl"></p>
         </h2>
+        <div className="w-full h-[0.025rem] mb-6 bg-neutral-800 rounded-full"></div>
         {flashcardSet && (
           <div className="grid grid-cols-4 gap-4">
             {flashcardSet?.flashcards.map((flashcard, index) => {

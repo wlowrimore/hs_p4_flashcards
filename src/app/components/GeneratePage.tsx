@@ -225,13 +225,13 @@ export default function GeneratePage() {
       </div>
 
       {/* Generated Flashcards Display Here */}
-      <div className="py-6 px-4 rounded flex bg-yellow-50/30 border-l-2 border-r-2 border-b-2 border-neutral-400 shadow shadow-neutral-500">
+      <div className="py-6 px-4 rounded flex bg-transparent">
         {flashcards.length > 0 && (
-          <div className="bg-gradient-to-bl from-zinc-100 via-gray-400 to-blue-500 border border-neutral-200 z-20 flex flex-col mx-auto justify-center items-center rounded-lg px-6">
-            <h2 className="pb-8 text-2xl font-bold tracking-wide uppercase">
+          <div className="bg-gradient-to-bl from-zinc-100 via-gray-400 to-blue-500 border border-neutral-200 flex flex-col mx-auto items-center rounded-lg px-6">
+            <h2 className="py-8 text-2xl font-bold tracking-wide uppercase">
               Generated Flashcards Preview for {prompt}
             </h2>
-            <div className="grid grid-cols-4 gap-10 h-1/2 border-b pb-6 border-neutral-700">
+            <div className="grid grid-cols-4 gap-10 border-b pb-6 border-neutral-700">
               {flashcards.map((flashcard, index) => {
                 const isFlipped = cardStates[index] ?? false;
                 return (

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+import SiteLogo from "../../../public/images/header-elephant.webp";
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -11,21 +13,43 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-10 bg-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold uppercase">Memoize</h1>
-        <nav className="hidden md:flex space-x-4">
-          <Link href="/features">Features</Link>
-          <Link href="/about">About</Link>
+        <Link
+          href="/"
+          className="py-2 px-4 flex items-center rounded-2xl hover:bg-neutral-200 transition duration-200"
+        >
+          <Image
+            src={SiteLogo}
+            alt="Memoize Logo"
+            width={64}
+            height={64}
+            className="rounded-2xl"
+          />
+          <h1 className="text-2xl font-bold uppercase">Memoize</h1>
+        </Link>
+        <nav className="hidden md:flex space-x-4 items-center">
+          <Link
+            href="/generate"
+            className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
+          >
+            Create Cards
+          </Link>
+          <Link
+            href="/generate"
+            className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
+          >
+            Saved Cards
+          </Link>
           {!session ? (
             <button
               onClick={() => signIn("google", { callbackUrl: "/generate" })}
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+              className="text-neutral-950 hover:text-blue-600 font-bold py-1 px-4 uppercase"
             >
               Sign In
             </button>
           ) : (
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
-              className="text-neutral-950 hover:text-neutral-600 font-bold py-2 px-4 rounded"
+              className="text-neutral-950 hover:text-blue-600 font-bold py-1 px-4 uppercase"
             >
               Sign Out
             </button>
