@@ -4,28 +4,33 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
-interface PricingTier {
+interface CTA {
   title: string;
-  price: number;
-  features: string[];
+  description: string;
+  imageUrl: string;
+  alt: string;
 }
 
-const pricingTiers: PricingTier[] = [
+const features: CTA[] = [
   {
-    title: "Free",
-    price: 0,
-    features: ["Basic features", "Limited cards"],
+    title: "AI Technology",
+    description: "Improve your learning with AI technology",
+    imageUrl: "/images/ai.webp",
+    alt: "William Lowrimore",
   },
   {
-    title: "Standard",
-    price: 9.99,
-    features: ["All basic features", "Unlimited cards", "Custom decks"],
+    title: "Budget Friendly",
+    description: "Choose the plan that fits your budget",
+    imageUrl: "/images/moneybag.webp",
+    alt: "William Lowrimore",
   },
   {
-    title: "Premium",
-    price: 19.99,
-    features: ["All features", "Advanced analytics", "Priority support"],
+    title: "24/7 Support",
+    description: "Get support whenever you need it",
+    imageUrl: "/images/custsupport.webp",
+    alt: "William Lowrimore",
   },
 ];
 
@@ -38,25 +43,48 @@ function LandingPage() {
         <p className="text-2xl mb-16">
           Master any subject with our powerful flashcard app.
         </p>
-        {!session ? (
-          <button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
-          >
-            Get Started
-          </button>
-        ) : (
-          <Link
-            href="/choose-plan"
-            className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
-          >
-            Get Started
-          </Link>
-        )}
+        <section className="grid grid-cols-3 max-w-[50rem] gap-4 mx-auto">
+          {features.length > 0 &&
+            features.map((feature, featIndex) => (
+              <div
+                key={featIndex}
+                className="flex flex-col justify-center items-center max-h-[16rem] p-3 rounded-lg bg-white/40 border border-neutral-200 shadow shadow-neutral-600"
+              >
+                <h2 className="text-xl font-bold tracking-wide">
+                  {feature.title}
+                </h2>
+                <Image
+                  src={feature.imageUrl}
+                  alt={feature.alt}
+                  width={75}
+                  height={75}
+                  className="max-h-[5rem] min-h-[5rem]"
+                />
+                <p className="max-w-[16rem]">{feature.description}</p>
+              </div>
+            ))}
+        </section>
+        <section className="mt-12 mb-[-1.7rem]">
+          {!session ? (
+            <button
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+              className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+            >
+              Get Started
+            </button>
+          ) : (
+            <Link
+              href="/choose-plan"
+              className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+            >
+              Get Started
+            </Link>
+          )}
+        </section>
       </section>
 
       <section className="container flex flex-col items-center mx-auto">
-        <article className="w-[60rem] text-neutral-800 text-3xl text-justify">
+        <article className="w-[60rem] text-neutral-800 text-xl text-justify">
           Revolutionize your learning with our AI-powered flashcard generator.
           Effortlessly create flashcards tailored to any subject, from academic
           pursuits to professional development. Whether you're a student aiming

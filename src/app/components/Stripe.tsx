@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Stripe from "stripe";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutPage from "./CheckoutPage";
@@ -69,14 +68,14 @@ const PricingComponent = () => {
       <h1 className="text-4xl flex justify-center w-[38rem] p-2 mb-4 font-bold uppercase">
         Choose Your plan
       </h1>
-      {plans.map((plan) => plan.price) && (
+      {selectedPlan && plans.map((plan) => plan.price) && (
         <p className="text-neutral-700 text-lg">
           {userName} has requested the{" "}
           <span className="font-bold capitalize">{selectedPlan}</span> plan for{" "}
           <span className="font-bold">${price}/month</span>.
         </p>
       )}
-       {/* ... your pricing component UI */}
+
       <div className="w-full flex justify-center gap-10">
         {plans.map((plan) => (
           <div
@@ -98,9 +97,6 @@ const PricingComponent = () => {
           </div>
         ))}
       </div>
-      {/* {selectedPlan !== "free" && (
-        <button disabled={!selectedPlan}>Checkout</button>
-      )} */}
       <section className="w-full flex justify-center">
         <Elements
           stripe={stripePromise}

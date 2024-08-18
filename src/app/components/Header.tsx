@@ -30,6 +30,12 @@ const Header = () => {
           {session && (
             <>
               <Link
+                href="/payment"
+                className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
+              >
+                View Plans
+              </Link>
+              <Link
                 href="/generate"
                 className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
               >
