@@ -44,7 +44,8 @@ export default function GeneratePage() {
   const [flashcardSets, setFlashcardSets] = useState<FlashcardSet[]>([]);
   const [isSetsFetched, setIsSetsFetched] = useState<boolean>(false);
   const [setsVersion, setSetsVersion] = useState(0);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [showMsg, setShowMsg] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [setName, setSetName] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -85,6 +86,15 @@ export default function GeneratePage() {
       return () => unsubscribe();
     }
   }, [user, setsVersion]);
+
+  useEffect(() => {
+    if (message) {
+      setShowMsg(true);
+      const timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 3000);
+    }
+  }, [message]);
 
   const saveFlashcards = async (
     user: { email: string },
@@ -140,6 +150,9 @@ export default function GeneratePage() {
     setIsLoading(true);
     try {
       const response = await generateFlashcards(prompt);
+      if (!response) {
+        setMessage("Sorry, I can't help you with that.");
+      }
       const flashcardsData = response.flashcards;
       setFlashcards(flashcardsData);
       // setPrompt("");
@@ -156,6 +169,7 @@ export default function GeneratePage() {
         const userObject = { email: user.email };
         await saveFlashcards(userObject, setName, flashcards);
         setIsModalOpen(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         console.log("No user found");
       }
@@ -214,9 +228,14 @@ export default function GeneratePage() {
         {/* Saved Sets Display Here */}
         {flashcardSets.length > 0 ? (
           <div className="flex flex-col w-1/2 justify-start pl-1">
-            <h2 className="pb-6 px-4 text-2xl font-semibold uppercase">
+            <h2 className="relative pb-6 px-4 text-2xl font-semibold uppercase">
               Saved Decks
             </h2>
+            {showMsg && (
+              <div className="absolute top-[16%] px-4 z-20 text-neutral-700">
+                {message}
+              </div>
+            )}
             <div className="flex-1 grid grid-cols-4 px-4 gap-2">
               {flashcardSets.map((flashcardSet, fcIndex) => (
                 <div
