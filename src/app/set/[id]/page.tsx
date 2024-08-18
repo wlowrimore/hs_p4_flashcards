@@ -124,7 +124,7 @@ const FlashcardSetDetails = () => {
                   <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
                     <div
                       onClick={() => handleFlipClick(index)}
-                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
                     >
                       <div className="bg-blue-200 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant.webp')] bg-no-repeat bg-center">
                         <div className="w-full absolute top-3 flex">
@@ -140,7 +140,7 @@ const FlashcardSetDetails = () => {
                     </div>
                     <div
                       onClick={() => handleFlipClick(index)}
-                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-zinc-300"
+                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
                     >
                       <div className="bg-yellow-100 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant2.webp')] bg-no-repeat bg-center">
                         <div className="w-full absolute top-3 flex">
