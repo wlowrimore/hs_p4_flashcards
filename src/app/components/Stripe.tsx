@@ -64,19 +64,19 @@ const PricingComponent = () => {
   };
 
   return (
-    <main className="w-screen max-w-[80rem] min-h-screen mx-auto text-neutral-800 flex flex-col py-12 items-center">
-      <h1 className="text-4xl flex justify-center w-[38rem] p-2 mb-4 font-bold uppercase">
+    <main className="w-screen min-w-[20rem] max-w-[80rem] min-h-screen mx-auto text-neutral-800 flex flex-col py-12 items-center">
+      <h1 className="text-3xl lg:text-4xl flex justify-center w-[38rem] p-2 mb-4 font-bold uppercase">
         Choose Your plan
       </h1>
       {selectedPlan && plans.map((plan) => plan.price) && (
-        <p className="text-neutral-700 text-lg">
+        <p className="text-neutral-700 text-lg px-6 pb-6 lg:pb-0 lg:px-0">
           {userName} has requested the{" "}
           <span className="font-bold capitalize">{selectedPlan}</span> plan for{" "}
           <span className="font-bold">${price}/month</span>.
         </p>
       )}
 
-      <div className="w-full flex justify-center gap-10">
+      <div className="lg:w-full flex flex-col md:flex-row w-[90%] justify-center gap-10">
         {plans.map((plan) => (
           <div
             key={plan.id}

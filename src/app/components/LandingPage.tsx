@@ -37,13 +37,15 @@ const features: CTA[] = [
 function LandingPage() {
   const { data: session } = useSession();
   return (
-    <div className="px-8 py-24 min-h-screen">
-      <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-6xl mb-4">Learn Faster, Remember Longer</h2>
-        <p className="text-2xl mb-16">
+    <div className="px-8 lg:py-24 min-h-screen">
+      <section className="container mx-auto lg:px-4 py-8 lg:py-16 text-center">
+        <h2 className="text-3xl font-bold lg:font-normal lg:text-6xl lg:mb-4">
+          Learn Faster, Remember Longer
+        </h2>
+        <p className="text-xl lg:text-2xl mb-8 lg:mb-16">
           Master any subject with our powerful flashcard app.
         </p>
-        <section className="grid grid-cols-3 max-w-[50rem] gap-4 mx-auto">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-[50rem] gap-4 mx-auto">
           {features.length > 0 &&
             features.map((feature, featIndex) => (
               <div
@@ -84,7 +86,7 @@ function LandingPage() {
       </section>
 
       <section className="container flex flex-col items-center mx-auto">
-        <article className="w-[60rem] text-neutral-800 text-xl text-justify">
+        <article className="min-w-[17rem] max-w-[60rem] text-neutral-800 text-xl lg:text-justify py-8">
           Revolutionize your learning with our AI-powered flashcard generator.
           Effortlessly create flashcards tailored to any subject, from academic
           pursuits to professional development. Whether you're a student aiming
