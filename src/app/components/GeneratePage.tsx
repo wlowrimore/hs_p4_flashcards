@@ -18,6 +18,7 @@ import { db } from "../firebase";
 import Image from "next/image";
 import ReactCardFlip from "react-card-flip";
 import StockCard from "../../../public/images/stockCard.webp";
+import Spinner from "../components/ui/Spinner";
 
 interface Flashcard {
   front: string;
@@ -182,9 +183,18 @@ export default function GeneratePage() {
     <main className="w-screen max-w-[80rem] min-h-screen mx-auto flex flex-col justify-center">
       <div className="py-6 px-6 rounded flex bg-yellow-50/30 gap-2 border-t-2 border-r-2 border-l-2 border-neutral-400">
         <div className="flex flex-col w-1/2 border-r-2 border-neutral-400 pr-6">
-          <h2 className="pb-2 px-4 text-2xl font-semibold uppercase">
-            Add Your Card Subject Below
-          </h2>
+          <div className="flex items-center mb-4">
+            <Image
+              src={session?.user?.image!}
+              alt={session?.user?.name as string}
+              width={44}
+              height={44}
+              className="rounded-full"
+            />
+            <h2 className="pb-2 px-2 text-2xl font-semibold uppercase">
+              Add Your Card Subject Below
+            </h2>
+          </div>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -197,15 +207,15 @@ export default function GeneratePage() {
             onClick={handleSubmit}
             className="w-full bg-blue-400 text-neutral-950 uppercase text-lg font-semibold tracking-wider rounded-lg border border-neutral-700 py-2 px-4 hover:bg-blue-500 hover:text-yellow-400 transition duration-200"
           >
-            Generate
+            {isLoading ? <Spinner /> : "Generate"}
           </button>
         </div>
 
         {/* Saved Sets Display Here */}
         {flashcardSets.length > 0 ? (
           <div className="flex flex-col w-1/2 justify-start pl-1">
-            <h2 className="pb-2 px-4 text-2xl font-semibold uppercase">
-              Saved Sets
+            <h2 className="pb-6 px-4 text-2xl font-semibold uppercase">
+              Saved Decks
             </h2>
             <div className="flex-1 grid grid-cols-4 px-4 gap-2">
               {flashcardSets.map((flashcardSet, fcIndex) => (
@@ -215,7 +225,7 @@ export default function GeneratePage() {
                   className="text-center"
                 >
                   <div className="bg-[url('/images/elephant.webp')] bg-no-repeat bg-cover bg-center p-2 w-full flex justify-center items-center bg-white/60 rounded-lg cursor-pointer hover:brightness-110 transition duration-200">
-                    <h2 className="text-xs min-w-[12rem] max-w-[12rem] min-h-[8rem] flex items-center justify-center  p-0 font-bold tracking-wider">
+                    <h2 className="text-xs min-h-[8rem] flex items-center justify-center font-bold tracking-wider">
                       {flashcardSet.name.toUpperCase()}
                     </h2>
                   </div>

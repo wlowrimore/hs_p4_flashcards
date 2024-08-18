@@ -2,10 +2,19 @@
 
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 interface FlashcardSet {
   id: string;
@@ -30,7 +39,8 @@ const FlashcardSetDetails = () => {
     ? collection(userDocRef, "flashcardSets")
     : null;
   const { id } = useParams();
-  console.log("Params:", id);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchFlashcardSetDetails = async (user: { email: string }) => {
@@ -67,15 +77,46 @@ const FlashcardSetDetails = () => {
     }));
   };
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
+  const handleDelete = async () => {
+    try {
+      const userDocRef = doc(db, "users", session?.user?.email || "");
+      const cardDocRef = doc(userDocRef, "flashcardSets", id as string);
+      await deleteDoc(cardDocRef);
+      router.push("/generate");
+    } catch (error: any) {
+      console.error("Error deleting flashcard set:", error);
+    }
+  };
+
   return (
     <main className="w-screen max-w-[80rem] min-h-screen flex py-12 mx-auto">
       <div className="flex flex-col w-full">
         <h2 className="pb-6 text-4xl text-neutral-700 font-semibold uppercase">
-          Let&apos;s study some&nbsp;{flashcardSet?.name.toUpperCase()}
+          studying&nbsp;{flashcardSet?.name.toUpperCase()}
         </h2>
+        <div className="w-full flex justify-between">
+          <p
+            onClick={handleGoBack}
+            className="cursor-pointer hover:text-blue-700 transition duration-200"
+          >
+            <FaArrowLeftLong className="inline-block mr-2" />
+            Back
+          </p>
+          <p
+            onClick={handleDelete}
+            className="cursor-pointer hover:text-red-700 transition duration-200"
+          >
+            delete this deck
+            <MdOutlineDeleteForever className="inline-block ml-2" />
+          </p>
+        </div>
         <div className="w-full h-[0.025rem] mb-6 bg-neutral-800 rounded-full"></div>
         {flashcardSet && (
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4 pl-4">
             {flashcardSet?.flashcards.map((flashcard, index) => {
               const isFlipped = cardStates[index] ?? false;
               return (

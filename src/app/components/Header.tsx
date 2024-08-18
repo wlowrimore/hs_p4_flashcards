@@ -39,7 +39,7 @@ const Header = () => {
                 href="/generate"
                 className="uppercase py-2 px-4 rounded-xl hover:bg-neutral-200 transition duration-200"
               >
-                Saved Cards
+                Saved Decks
               </Link>
             </>
           )}

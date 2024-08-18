@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
@@ -29,44 +30,41 @@ const pricingTiers: PricingTier[] = [
 ];
 
 function LandingPage() {
+  const { data: session } = useSession();
   return (
-    <div className="px-8 py-12 min-h-screen">
-      {/* Hero section */}
+    <div className="px-8 py-24 min-h-screen">
       <section className="container mx-auto px-4 py-16 text-center">
         <h2 className="text-6xl mb-4">Learn Faster, Remember Longer</h2>
-        <p className="text-2xl mb-8">
+        <p className="text-2xl mb-16">
           Master any subject with our powerful flashcard app.
         </p>
-        <button
-          onClick={() => signIn("ggogle", { callbackUrl: "/" })}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Get Started
-        </button>
+        {!session ? (
+          <button
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Started
+          </button>
+        ) : (
+          <Link
+            href="/choose-plan"
+            className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Started
+          </Link>
+        )}
       </section>
 
-      {/* Pricing section */}
-      <section className="container mx-auto">
-        {/* <h2 className="text-3xl font-bold text-center mb-8">Pricing</h2> */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pricingTiers.map((tier) => (
-            <div
-              key={tier.title}
-              className="bg-white p-6 rounded-2xl shadow-md"
-            >
-              <h3 className="text-2xl font-bold mb-4">{tier.title}</h3>
-              <p className="text-4xl font-bold mb-4">${tier.price}/month</p>
-              <ul>
-                {tier.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
-              </ul>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Choose Plan
-              </button>
-            </div>
-          ))}
-        </div>
+      <section className="container flex flex-col items-center mx-auto">
+        <article className="w-[60rem] text-neutral-800 text-3xl text-justify">
+          Revolutionize your learning with our AI-powered flashcard generator.
+          Effortlessly create flashcards tailored to any subject, from academic
+          pursuits to professional development. Whether you're a student aiming
+          to ace exams or a professional preparing for interviews, our app
+          provides an interactive and engaging way to master new information.
+          With instant feedback and customizable study sessions, you'll
+          accelerate your learning journey and achieve your goals.
+        </article>
       </section>
     </div>
   );
