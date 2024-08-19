@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Memoize - A Flashcard Creator",
     description: "AI powered flashcard creator",
-    url: "https://memoize.vercel.app",
+    url: "http://www.williamlowrimore.com",
     siteName: "Memoize - A Flashcard Creator",
     images: [
       {
