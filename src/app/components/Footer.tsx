@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <main className="w-screen h-12 py-1 px-12 flex justify-center gap-10">
+    <main className="w-screen h-auto py-1 px-2 md:px-12 flex flex-col md:flex-row items-center justify-center md:gap-10 text-[0.55rem] lg:text-[0.8rem]">
       <p>
         Copyright &copy; 2024 Memoize. All Rights Reserved.&nbsp;|&nbsp;
         <Link
