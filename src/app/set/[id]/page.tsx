@@ -94,8 +94,8 @@ const FlashcardSetDetails = () => {
 
   return (
     <main className="w-screen max-w-[80rem] min-h-screen flex py-12 mx-auto">
-      <div className="flex flex-col w-full">
-        <h2 className="pb-6 text-4xl text-neutral-700 font-semibold uppercase">
+      <div className="flex flex-col w-full px-4">
+        <h2 className="pb-6 text-2xl md:text-4xl text-neutral-700 font-semibold uppercase">
           studying&nbsp;{flashcardSet?.name.toUpperCase()}
         </h2>
         <div className="w-full flex justify-between">
@@ -116,15 +116,15 @@ const FlashcardSetDetails = () => {
         </div>
         <div className="w-full h-[0.025rem] mb-6 bg-neutral-800 rounded-full"></div>
         {flashcardSet && (
-          <div className="grid grid-cols-4 gap-4 pl-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:pl-4">
             {flashcardSet?.flashcards.map((flashcard, index) => {
               const isFlipped = cardStates[index] ?? false;
               return (
-                <div key={index} className="w-full">
+                <div key={index} className="w-full md:px-6 ">
                   <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
                     <div
                       onClick={() => handleFlipClick(index)}
-                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
+                      className="min-w-[16rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
                     >
                       <div className="bg-blue-200 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant.webp')] bg-no-repeat bg-center">
                         <div className="w-full absolute top-3 flex">
@@ -140,7 +140,7 @@ const FlashcardSetDetails = () => {
                     </div>
                     <div
                       onClick={() => handleFlipClick(index)}
-                      className="min-w-[18rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
+                      className="min-w-[16rem] max-w-[18rem] min-h-[18rem] px-2 rounded-xl border-2 border-neutral-400 flex flex-col justify-center relative bg-white cursor-pointer hover:brightness-110 transition duration-200 shadow-md shadow-neutral-700"
                     >
                       <div className="bg-yellow-100 w-full h-[16.7rem] flex flex-col justify-center px-2 rounded-lg bg-[url('/images/elephant2.webp')] bg-no-repeat bg-center">
                         <div className="w-full absolute top-3 flex">

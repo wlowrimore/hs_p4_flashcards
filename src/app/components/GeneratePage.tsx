@@ -194,25 +194,25 @@ export default function GeneratePage() {
   }
 
   return (
-    <main className="w-screen max-w-[80rem] min-h-screen mx-auto flex flex-col justify-center">
-      <div className="py-6 px-6 rounded flex bg-yellow-50/30 gap-2 border-t-2 border-r-2 border-l-2 border-neutral-400">
-        <div className="flex flex-col w-1/2 border-r-2 border-neutral-400 pr-6">
-          <div className="flex items-center mb-4">
+    <main className="w-screen max-w-[80rem] min-w-[20rem] min-h-screen mx-auto flex flex-col justify-center items-center">
+      <div className="py-16 md:py-6 md:px-6 rounded flex flex-col items-center md:flex-row bg-yellow-50/30 md:gap-2 border-t-2 md:border-r-2 md:border-l-2 border-neutral-400">
+        <div className="flex flex-col w-full md:pb-72 items-center md:w-1/2 md:border-r-2 border-neutral-400 px-4 md:pr-6">
+          <div className="flex flex-col md:flex-row items-center mx-auto mb-4">
             <Image
               src={session?.user?.image!}
               alt={session?.user?.name as string}
               width={44}
               height={44}
-              className="rounded-full"
+              className="rounded-full w-14 h-14 md:w-16 md:h-16"
             />
-            <h2 className="pb-2 px-2 text-2xl font-semibold uppercase">
+            <h2 className="pt-6 md:pt-0 pb-2 px-2 text-lg md:text-2xl font-semibold uppercase">
               Add Your Card Subject Below
             </h2>
           </div>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="w-full h-24 px-4 pt-9 mb-2 bg-white/60 uppercase text-lg font-semibold text-center rounded-lg placeholder:text-center placeholder:uppercase placeholder:text-neutral-800/40 outline-none"
+            className="w-full h-24 px-4 pt-9 mb-2 bg-white/60 uppercase text-sm md:text-lg font-semibold text-center rounded-lg placeholder:text-center placeholder:uppercase placeholder:text-neutral-800/40 outline-none"
             rows={5}
             placeholder="Enter&nbsp;  Flashcards&nbsp;  Subject"
           />
@@ -227,8 +227,8 @@ export default function GeneratePage() {
 
         {/* Saved Sets Display Here */}
         {flashcardSets.length > 0 ? (
-          <div className="flex flex-col w-1/2 justify-start pl-1">
-            <h2 className="relative pb-6 px-4 text-2xl font-semibold uppercase">
+          <div className="flex flex-col w-full items-start md:w-1/2 mt-6 md:mt-0 md:justify-start md:pl-1">
+            <h2 className="relative pb-4 px-4 text-xl md:text-2xl font-semibold uppercase">
               Saved Decks
             </h2>
             {showMsg && (
@@ -236,7 +236,7 @@ export default function GeneratePage() {
                 {message}
               </div>
             )}
-            <div className="flex-1 grid grid-cols-4 px-4 gap-2">
+            <div className="md:flex-1 grid grid-cols-2 md:grid-cols-3 px-4 gap-2">
               {flashcardSets.map((flashcardSet, fcIndex) => (
                 <div
                   key={fcIndex}
@@ -258,13 +258,13 @@ export default function GeneratePage() {
       </div>
 
       {/* Generated Flashcards Display Here */}
-      <div className="py-6 px-4 rounded flex bg-transparent">
+      <div className="py-6 px-4 rounded flex bg-transparent w-full">
         {flashcards.length > 0 && (
-          <div className="bg-gradient-to-bl from-zinc-100 via-gray-400 to-blue-500 border border-neutral-200 flex flex-col mx-auto items-center rounded-lg px-6">
-            <h2 className="py-8 text-2xl font-bold tracking-wide uppercase">
+          <div className="bg-gradient-to-bl from-zinc-100 via-gray-400 to-blue-500 border border-neutral-200 flex flex-col mx-auto items-center rounded-lg px-4 md:px-6">
+            <h2 className="py-4 px-2 text-lg md:text-2xl font-bold tracking-wide uppercase">
               Generated Flashcards Preview for {prompt}
             </h2>
-            <div className="grid grid-cols-4 gap-10 border-b pb-6 border-neutral-700">
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-10 border-b pb-6 border-neutral-700">
               {flashcards.map((flashcard, index) => {
                 const isFlipped = cardStates[index] ?? false;
                 return (
@@ -320,9 +320,9 @@ export default function GeneratePage() {
         )}
       </div>
       {isModalOpen && (
-        <section className="bg-gradient-to-tr from-amber-400 to-blue-700/90 fixed top-0 bottom-0 right-[50%] translate-x-[50%] h-screen w-screen z-20 text-neutral-950">
-          <div className="bg-blue-700/40 w-[60rem] h-screen items-center flex flex-col border-4 border-white/20 justify-center mx-auto">
-            <h2 className="pb-6 text-white text-4xl font-semibold uppercase">
+        <section className="bg-gradient-to-tr from-amber-400 to-blue-700/90 fixed top-0 bottom-0 md:right-[50%] md:translate-x-[50%] h-screen w-screen z-20 text-neutral-950">
+          <div className="bg-blue-700/40 w-[20rem] px-2 md:w-[60rem] h-screen items-center flex flex-col border-4 border-white/20 justify-center mx-auto">
+            <h2 className="pb-6 text-white text-center text-2xl md:text-3xl lg:text-4xl font-semibold uppercase">
               Save Flashcard Deck
             </h2>
             <div className="p-4 rounded">
@@ -335,27 +335,27 @@ export default function GeneratePage() {
               />
             </div>
             <div className="text-neutral-950">
-              <p className="text-white text-lg">
+              <p className="text-white md:text-lg">
                 Please enter a name for your flashcard deck.
               </p>
               <input
                 type="text"
                 autoFocus
-                className="w-full h-[3rem] flex text-center text-lg font-semibold uppercase p-2 rounded-lg outline-none"
+                className="w-full md:w-full h-[3rem] flex text-center text-lg font-semibold uppercase p-2 rounded-lg outline-none"
                 value={setName}
                 onChange={(e) => setSetName(e.target.value)}
               />
             </div>
-            <div className="flex gap-3 mt-6">
+            <div className="flex w-full justify-center gap-3 mt-6">
               <button
                 onClick={handleCloseModal}
-                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[11rem] rounded-lg py-2 hover:bg-red-700/40 transition duration-200"
+                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] rounded-lg py-2 hover:bg-red-700/40 transition duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={(e) => user && handleSave()}
-                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[11rem] rounded-lg py-2 hover:bg-green-500/40 transition duration-200"
+                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] rounded-lg py-2 hover:bg-green-500/40 transition duration-200"
               >
                 Save
               </button>
