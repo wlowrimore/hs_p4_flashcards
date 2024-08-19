@@ -16,7 +16,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Deployed on Vercel
 
-Visit Memoize [here](https://headstarter-p2-pantry-tracker.vercel.app/),
+Visit Memoize [here](https://memoize-six.vercel.app/),
 or on [my website](http://www.williamlowrimore.com)
 
 <img src="public/images/site-samples/home.webp" alt="William Lowrimore" width="800" height="600">
