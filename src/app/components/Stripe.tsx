@@ -21,7 +21,7 @@ const PricingComponent = () => {
   const userName = session?.user?.name || "Guest";
 
   const priceIds = {
-    free: "price_free", // Replace with your actual product IDs
+    free: "price_free",
     standard: "price_standard",
     premium: "price_premium",
   };

@@ -8,7 +8,6 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "../../../libs/convertToSubcurrency";
-import Spinner from "./ui/Spinner";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();

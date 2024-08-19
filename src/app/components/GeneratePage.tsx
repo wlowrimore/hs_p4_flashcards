@@ -2,10 +2,6 @@
 import {
   doc,
   collection,
-  setDoc,
-  updateDoc,
-  arrayUnion,
-  writeBatch,
   addDoc,
   getDocs,
   onSnapshot,
@@ -155,7 +151,6 @@ export default function GeneratePage() {
       }
       const flashcardsData = response.flashcards;
       setFlashcards(flashcardsData);
-      // setPrompt("");
     } catch (error) {
       console.error("Error generating flashcards:", error);
     } finally {
@@ -195,7 +190,7 @@ export default function GeneratePage() {
 
   return (
     <main className="w-screen max-w-[80rem] min-w-[20rem] min-h-screen mx-auto flex flex-col justify-center items-center">
-      <div className="py-16 md:py-6 md:px-6 rounded flex flex-col items-center md:flex-row bg-yellow-50/30 md:gap-2 border-t-2 md:border-r-2 md:border-l-2 border-neutral-400">
+      <div className="py-16 md:py-6 md:px-3 rounded flex flex-col items-center md:flex-row bg-yellow-50/30 md:gap-2 border-t-2 md:border-r-2 md:border-l-2 border-neutral-400">
         <div className="flex flex-col w-full md:pb-72 items-center md:w-1/2 md:border-r-2 border-neutral-400 px-4 md:pr-6">
           <div className="flex flex-col md:flex-row items-center mx-auto mb-4">
             <Image
@@ -346,16 +341,16 @@ export default function GeneratePage() {
                 onChange={(e) => setSetName(e.target.value)}
               />
             </div>
-            <div className="flex w-full justify-center gap-3 mt-6">
+            <div className="flex w-full justify-center gap-3 lg:gap-6 mt-6">
               <button
                 onClick={handleCloseModal}
-                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] rounded-lg py-2 hover:bg-red-700/40 transition duration-200"
+                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] lg:w-[11.8rem] rounded-lg py-2 hover:bg-red-700/40 transition duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={(e) => user && handleSave()}
-                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] rounded-lg py-2 hover:bg-green-500/40 transition duration-200"
+                className="bg-white/30 text-lg uppercase text-black font-bold tracking-wider w-[9rem] md:w-[11rem] lg:w-[11.8rem] rounded-lg py-2 hover:bg-green-500/40 transition duration-200"
               >
                 Save
               </button>

@@ -12,10 +12,6 @@ const Header = () => {
 
   const { data: session } = useSession();
 
-  // const handleNavToggle = () => {
-  //   setIsNavOpen(!isNavOpen);
-  // };
-
   return (
     <header className="sticky top-0 z-10 bg-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">

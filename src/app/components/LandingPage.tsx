@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 interface CTA {
@@ -69,14 +67,14 @@ function LandingPage() {
         <section className="mt-12 mb-[-1.7rem]">
           {!session ? (
             <button
-              onClick={() => signIn("google", { callbackUrl: "/" })}
+              onClick={() => signIn("google", { callbackUrl: "/payment" })}
               className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
             >
               Get Started
             </button>
           ) : (
             <Link
-              href="/choose-plan"
+              href="/payment"
               className="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
             >
               Get Started

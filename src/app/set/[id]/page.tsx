@@ -3,13 +3,7 @@
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
@@ -27,7 +21,6 @@ interface FlashcardSet {
 
 const FlashcardSetDetails = () => {
   const [flashcardSet, setFlashcardSet] = useState<FlashcardSet | null>(null);
-  const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [cardStates, setCardStates] = useState<{ [key: number]: boolean }>({});
 
   const { data: session } = useSession();

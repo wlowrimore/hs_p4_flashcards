@@ -99,3 +99,9 @@
     left: 8.5rem;
   }
 }
+
+@media screen and (min-width: 1280px) {
+  .loader div {
+    left: 15rem;
+  }
+}
