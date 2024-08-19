@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "./components/Header";
 import SessionWrapper from "@/providers/SessionProvider";
+import Footer from "./components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
           <Header />
           <main className="bg-gradient-to-tr from-amber-400 to-blue-700/50">
             {children}
+            <Footer />
           </main>
         </body>
       </html>
