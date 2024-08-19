@@ -87,11 +87,11 @@ function LandingPage() {
         <article className="min-w-[17rem] max-w-[60rem] text-neutral-800 text-xl lg:text-justify py-8">
           Revolutionize your learning with our AI-powered flashcard generator.
           Effortlessly create flashcards tailored to any subject, from academic
-          pursuits to professional development. Whether you're a student aiming
-          to ace exams or a professional preparing for interviews, our app
-          provides an interactive and engaging way to master new information.
-          With instant feedback and customizable study sessions, you'll
-          accelerate your learning journey and achieve your goals.
+          pursuits to professional development. Whether you&apos;re a student
+          aiming to ace exams or a professional preparing for interviews, our
+          app provides an interactive and engaging way to master new
+          information. With instant feedback and customizable study sessions,
+          you&apos;ll accelerate your learning journey and achieve your goals.
         </article>
       </section>
     </div>
